@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+    tags:
+    - { name: tactician.handler, typehints: true}
+
+  App\Application\Service\CreateASafeboxHandler: ~
+  App\Application\Service\OpenASafeboxHandler: ~
+  App\Application\Service\AddASafeboxItemHandler: ~
+  App\Application\Service\GetASafeboxHandler: ~

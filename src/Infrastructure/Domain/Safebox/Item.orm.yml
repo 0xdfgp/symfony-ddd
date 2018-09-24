@@ -1,0 +1,18 @@
+App\Domain\Safebox\Item:
+  type: entity
+
+  id:
+    id:
+      type: item_id
+
+  embedded:
+    content:
+      class: App\Domain\Safebox\Content
+      columnPrefix: false
+
+  manyToOne:
+    safebox:
+      targetEntity: App\Domain\Safebox\Safebox
+      inversedBy: items
+      joinColumn:
+        nullable: false

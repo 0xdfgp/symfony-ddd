@@ -1,0 +1,193 @@
+openapi: 3.0.0
+
+info:
+  description: |
+    RESTful API to manage a safebox system
+  version: 1.0.0
+  title: Safebox API
+
+paths:
+  /safebox:
+    post:
+      summary: Creates a new safebox
+      description: |
+        Creates a new safebox based on a non-empty name and a password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Safebox Name
+                  type: string
+                password:
+                  description: Safebox Password
+                  type: string
+              required:
+              - name
+              - password
+              example:
+                name: Adsmurai Safebox 01
+                password: adsmuraiExamplePassword
+      responses:
+        '200':
+          description: Safebox correctly created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: Safebox id
+                    type: string
+                required:
+                - id
+                example:
+                  id: f626c808-648c-41fe-865d-c6062f3e0899
+        '409':
+          description: Safebox already exists
+        '422':
+          description: Malformed expected data
+        '500':
+          description: Unexpected API error
+
+  /safebox/{id}:
+    get:
+      summary: Retrieves the content of a safebox
+      description: |
+        Retrieves the currently stored contents in the safebox identified by the
+        given ID and with the given opening token.
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: id
+        description: Safebox Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Safebox contents correctly retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    description: Safebox items
+                    type: array
+                    items:
+                      type: string
+                required:
+                - items
+                example:
+                  items:
+                  - Safebox content 03
+                  - Safebox content 02
+                  - Safebox content 01
+        '401':
+          description: Specified token does not match
+        '404':
+          description: Requested safebox does not exist
+        '422':
+          description: Malformed expected data
+        '423':
+          description: Requested safebox is locked
+        '500':
+          description: Unexpected API error
+    post:
+      summary: Add an items to a Safebox
+      description: |
+        Inserts new contents in the safebox identified by the given ID and wit
+        the given opening token.
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: id
+        description: Safebox id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item:
+                  description: Safebox item
+                  type: string
+              example:
+                item: New safebox content
+      responses:
+        '200':
+          description: Content correctly added to the safebox
+        '401':
+          description: Specified token does not match
+        '404':
+          description: Requested safebox does not exist
+        '422':
+          description: Malformed expected data
+        '423':
+          description: Requested safebox is locked
+        '500':
+          description: Unexpected API error
+
+  /safebox/{id}/open:
+    get:
+      summary: Open a safebox
+      description: >
+        Opens the safebox identified by the given ID and with the specified password.
+      security:
+      - password: []
+      parameters:
+      - in: path
+        name: id
+        description: Safebox id
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: expirationTime
+        schema:
+          type: integer
+          default: 180
+        required: false
+        description: Expiration time in seconds
+      responses:
+        '200':
+          description: Safebox correctly opened
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    description: Token for future actions over an opening safebox
+                    type: string
+                required:
+                - id
+                example:
+                  token: RkbfZSW5MmcK3b7kcgg
+        '404':
+          description: Requested safebox does not exist
+        '422':
+          description: Malformed expected data
+        '423':
+          description: Requested safebox is locked
+        '500':
+          description: Unexpected API error
+
+components:
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+    password:
+      type: http
+      scheme: bearer

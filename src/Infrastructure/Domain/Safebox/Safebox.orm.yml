@@ -1,0 +1,29 @@
+App\Domain\Safebox\Safebox:
+  type: entity
+
+  id:
+    id:
+      type: safebox_id
+
+  fields:
+    locked:
+      type: boolean
+      column: locked
+
+    remainingAttempts:
+      type: integer
+      column: remaining_attempts
+
+  embedded:
+    name:
+      class: App\Domain\Safebox\Name
+      columnPrefix: false
+    password:
+      class: App\Domain\Safebox\Password
+      columnPrefix: false
+
+  oneToMany:
+    items:
+      targetEntity: App\Domain\Safebox\Item
+      mappedBy: safebox
+      cascade: ["persist"]

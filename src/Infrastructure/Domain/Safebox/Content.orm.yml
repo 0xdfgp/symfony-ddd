@@ -1,0 +1,8 @@
+App\Domain\Safebox\Content:
+  type: embeddable
+
+  fields:
+    value:
+      type: string
+      column: content
+      nullable: false

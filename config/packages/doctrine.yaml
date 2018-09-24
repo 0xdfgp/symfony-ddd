@@ -1,0 +1,36 @@
+parameters:
+    # Adds a fallback DATABASE_URL if the env var is not set.
+    # This allows you to run cache:warmup even if your
+    # environment variables are not available yet.
+    # You should not need to change this value.
+    env(DATABASE_URL): ''
+
+doctrine:
+    dbal:
+        # configure these for your database server
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+
+        url: '%env(resolve:DATABASE_URL)%'
+
+        types:
+            uuid:  Ramsey\Uuid\Doctrine\UuidType
+            uuid_binary_ordered_time:  Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType
+            safebox_id: App\Infrastructure\Domain\Safebox\DoctrineSafeboxId
+            item_id: App\Infrastructure\Domain\Safebox\DoctrineItemId
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            Safebox:
+                is_bundle: false
+                type: yml
+                dir: '%kernel.project_dir%/src/Infrastructure/Domain/Safebox'
+                prefix: 'App\Domain\Safebox'
+                alias: App\Domain\Safebox
+

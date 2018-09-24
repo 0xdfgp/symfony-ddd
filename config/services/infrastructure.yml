@@ -1,0 +1,26 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  App\Infrastructure\Fixtures\ForbiddenPasswordsFixtures: ~
+  App\Infrastructure\Domain\Safebox\JWTTokenFactory: ~
+  App\Infrastructure\Domain\Safebox\DoctrineSafeboxRepository: ~
+  App\Infrastructure\Domain\Safebox\DoctrineForbiddenPasswordRepository: ~
+
+  # Domain aliases:
+  App\Domain\Safebox\SafeboxRepository: '@App\Infrastructure\Domain\Safebox\DoctrineSafeboxRepository'
+  App\Domain\Safebox\ForbiddenPasswordRepository: '@App\Infrastructure\Domain\Safebox\DoctrineForbiddenPasswordRepository'
+  App\Domain\Safebox\TokenFactory: '@App\Infrastructure\Domain\Safebox\JWTTokenFactory'
+
+
+  # Event listeners:
+
+  App\Infrastructure\EventListener\OnJWTDecodedListener:
+    tags:
+      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_decoded, method: handle }
+
+  App\Infrastructure\EventListener\ExceptionListener:
+    tags:
+    - { name: kernel.event_listener, event: kernel.exception }
