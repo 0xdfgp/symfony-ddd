@@ -8,9 +8,10 @@ This is a example of an implementation of DDD with Symfony 4.
 - composer
 
 ## Get started
-You need to install all dependencies and start the local server (Pending to dockerize).
+You need to run the docker image, to install all dependencies and to start the local server (Pending to dockerize).
 
 ```bash
+$ docker-compose up -d
 $ composer install
 $ bin/console server:start
 ```
