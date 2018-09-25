@@ -4,16 +4,13 @@ This is a example of an implementation of DDD with Symfony 4.
 ## Requirements
 
 - Docker
-- Php 7.1
-- composer
 
 ## Get started
-You need to run the docker image, to install all dependencies and to start the local server (Pending to dockerize).
+You need to run the docker image and install all dependencies.
 
 ```bash
 $ docker-compose up -d
-$ composer install
-$ bin/console server:start
+$ docker exec -it app_php composer install
 ```
 
 ## Authentication
@@ -22,14 +19,14 @@ This app uses JWT. You can find the full api specification in the [openapi.yml](
 ## Tests
  
 ### Unitary tests
-Test coverage is important but if you a looking for a 100% you could finish with very fragile tests. That's the reason
+Test coverage is important but if you are looking for a 100% you could finish with very fragile tests. That's the reason
 because this unitary tests are based on behaviours instead of class by class.
 
 ```bash
-bin/console/phpunit
+docker exec -it app_php bin/phpunit
 ```
 
 ### Functional tests
 ```bash
-php vendor/bin/codecept run
+docker exec -it app_php vendor/bin/codecept run
 ```

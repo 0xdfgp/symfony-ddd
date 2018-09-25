@@ -58,13 +58,13 @@
             "@auto-scripts",
             "php vendor/bin/codecept build",
             "php bin/console doctrine:schema:update --force",
-            "php bin/console doctrine:fixtures:load"
+            "php bin/console doctrine:fixtures:load --no-interaction"
         ],
         "post-update-cmd": [
             "@auto-scripts",
             "php vendor/bin/codecept build",
             "php bin/console doctrine:schema:update --force",
-            "php bin/console doctrine:fixtures:load"
+            "php bin/console doctrine:fixtures:load --no-interaction"
         ]
     },
     "conflict": {

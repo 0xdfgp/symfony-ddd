@@ -12,3 +12,24 @@ services:
       MYSQL_USER: adsmurai
       MYSQL_PASSWORD: adsmurai
       MYSQL_ROOT_PASSWORD: adsmurai
+
+  php:
+    build: ./docker/php-fpm
+    container_name: app_php
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/app:cached
+    links:
+      - mysql
+    extra_hosts:
+      - "docker.host:127.0.0.1"
+
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - "8080:80"
+    links:
+      - php
+    volumes:
+      - ./logs/nginx/:/var/log/nginx:cached
