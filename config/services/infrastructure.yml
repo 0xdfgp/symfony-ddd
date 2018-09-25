@@ -14,6 +14,9 @@ services:
   App\Domain\Safebox\ForbiddenPasswordRepository: '@App\Infrastructure\Domain\Safebox\DoctrineForbiddenPasswordRepository'
   App\Domain\Safebox\TokenFactory: '@App\Infrastructure\Domain\Safebox\JWTTokenFactory'
 
+  App\Infrastructure\Encryptor\Encryptor:
+    arguments:
+      - '%env(ENCRYPTION_KEY)%'
 
   # Event listeners:
 

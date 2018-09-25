@@ -5,10 +5,10 @@ App\Domain\Safebox\Item:
     id:
       type: item_id
 
-  embedded:
+  fields:
     content:
-      class: App\Domain\Safebox\Content
-      columnPrefix: false
+      type: encrypted_content
+      column: content
 
   manyToOne:
     safebox:

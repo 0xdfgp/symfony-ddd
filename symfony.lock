@@ -155,6 +155,15 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "paragonie/constant_time_encoding": {
+        "version": "v2.2.2"
+    },
+    "paragonie/halite": {
+        "version": "v3.4.1"
+    },
+    "paragonie/sodium_compat": {
+        "version": "v1.7.0"
+    },
     "phar-io/manifest": {
         "version": "1.0.3"
     },

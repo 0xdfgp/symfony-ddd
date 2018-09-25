@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Infrastructure\Domain\Safebox\DoctrineContentType;
+use App\Infrastructure\Encryptor\Encryptor;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -54,5 +56,11 @@ class Kernel extends BaseKernel
         $confDir = $this->getProjectDir().'/config';
 
         $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
+    }
+
+    public function boot()
+    {
+        parent::boot();
+        DoctrineContentType::load($this->getContainer()->get(Encryptor::class));
     }
 }
