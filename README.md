@@ -16,6 +16,9 @@ $ docker exec -it app_php composer install
 ## Authentication
 This app uses JWT. You can find the full api specification in the [openapi.yml](openapi.yml)
 
+## Encryption
+Safeboxes content are encrypted with [sodium](https://download.libsodium.org/doc/)
+
 ## Tests
  
 ### Unitary tests
